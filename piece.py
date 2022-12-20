@@ -4,3 +4,6 @@ class Piece:
     
     def can_move(self):
         pass
+
+    def get_pixmap(self):
+        return

@@ -1,4 +1,5 @@
 from piece import Piece
+from PyQt5.QtGui import QPixmap
 
 class King(Piece):
     def __init__(self, color):
@@ -6,3 +7,11 @@ class King(Piece):
 
     def can_move(self):
         pass
+
+    def get_pixmap(self):
+        if not self:
+            return
+        if self.color == 'black':
+            return QPixmap('images/black_king')
+        else:
+            return QPixmap('images/white_king')
