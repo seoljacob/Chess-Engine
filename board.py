@@ -35,9 +35,13 @@ class Board:
         for i in range(8):
             self.grid[6][i] = Pawn('white')  # white pawns
     
-    def show_internal_board(self):
+    def show(self):
         for row in self.grid:
             print(row)
+
+    def is_same_tile(self, from_pos, to_pos):
+        if from_pos == to_pos:
+            return True
 
     def is_tile_occupied(self, to_pos):
         if self.grid[to_pos[0]][to_pos[1]]:

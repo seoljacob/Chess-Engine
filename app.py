@@ -60,9 +60,14 @@ class ChessGUI(QMainWindow):
 
         piece = self.chess_board.get_piece((sy, sx))
         self.chess_board.set_piece((ey, ex), piece)
-        self.chess_board.clean_up((sy, sx))
+        if not self.chess_board.is_same_tile((sy, sx), (ey, ex)):
+            print((sy, sx) == (ey, ex))
+            self.chess_board.clean_up((sy, sx))
 
-        self.chess_board.show_internal_board()
+        self.update_GUI()
+
+    def update_GUI(self):
+        self.chess_board.show()
         
 
 if __name__ == '__main__':
