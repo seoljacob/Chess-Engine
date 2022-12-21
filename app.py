@@ -1,10 +1,12 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFrame, QGridLayout, QStackedLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFrame, QGridLayout
 from PyQt5.QtCore import Qt
 from board import Board
 from custom_label import ChessPieceLabel
 
 class ChessGUI(QMainWindow):
+    _sx, _sy = None, None
+
     def __init__(self, chess_board):
         super().__init__()
         self.chess_board = chess_board # internal chess board
@@ -13,7 +15,7 @@ class ChessGUI(QMainWindow):
         self.setWindowTitle("Chess Engine")
         self.setGeometry(0, 0, 800, 800) # (x, y, width, height)
         self.setFixedSize(800, 800)
-        
+
         # where the main content goes
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
@@ -46,19 +48,21 @@ class ChessGUI(QMainWindow):
                     label.setScaledContents(True)
                     label.setFixedSize(100, 100)
                     label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+                    label.mouse_press.connect(ChessGUI.set_start_pos)
+                    label.mouse_release.connect(ChessGUI.update_board) # connect mouse release to event handler
                     self.grid_layout.addWidget(label, i, j)
-                # else:
-                #     square = QFrame()
-                #     square.setFrameStyle(QFrame.Panel | QFrame.Plain)
-                #     self.grid_layout.addWidget(square, i, j)
-                    
-    def move_piece(self, from_pos, to_pos):
-        self.chess_board.move_piece(from_pos, to_pos)
-        self.update_board()
 
-    def update_board(self):
-        # Update the GUI to match the updated board state
-        pass
+    @staticmethod
+    def set_start_pos(x, y):
+        ChessGUI._sx = x
+        ChessGUI._sy = y
+
+    @staticmethod
+    def update_board(ex, ey):
+        # Update the internal chess board to match GUI
+        print(f"Start pos: ({ChessGUI._sx}, {ChessGUI._sy})")
+        print(f"End pos: ({ex}, {ey})")
+        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
