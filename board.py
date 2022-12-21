@@ -54,6 +54,9 @@ class Board:
     def set_piece(self, to_pos, piece):
         if not self.is_tile_occupied(to_pos):
             self.grid[to_pos[0]][to_pos[1]] = piece
+        else:
+            self.grid[to_pos[0]][to_pos[1]] = None
+            self.grid[to_pos[0]][to_pos[1]] = piece
 
     def clean_up(self, from_pos):
         self.grid[from_pos[0]][from_pos[1]] = None

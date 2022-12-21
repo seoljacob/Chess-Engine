@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFrame, QGridLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFrame, QGridLayout, QStackedLayout
 from PyQt5.QtCore import Qt
 from board import Board
 from custom_label import ChessPieceLabel
@@ -41,7 +41,7 @@ class ChessGUI(QMainWindow):
             for j in range(8):
                 piece = self.chess_board.grid[i][j]
                 if piece:
-                    label = ChessPieceLabel() # creates a QLabel with a QFrame as its parent (we can do this conversely as well)
+                    label = ChessPieceLabel()
                     label.setPixmap(piece.get_pixmap())
                     label.setScaledContents(True)
                     label.setFixedSize(100, 100)
@@ -59,15 +59,19 @@ class ChessGUI(QMainWindow):
         ey = int(ey / grid_size)
 
         piece = self.chess_board.get_piece((sy, sx))
-        self.chess_board.set_piece((ey, ex), piece)
+        self.chess_board.set_piece((ey, ex), piece) # check if dest is occupied, if not, place piece
         if not self.chess_board.is_same_tile((sy, sx), (ey, ex)):
-            print((sy, sx) == (ey, ex))
             self.chess_board.clean_up((sy, sx))
 
         self.update_GUI()
 
     def update_GUI(self):
-        self.chess_board.show()
+        for i in range(self.grid_layout.count()):
+            label = self.grid_layout.itemAt(i).widget()
+            if isinstance(label, ChessPieceLabel):
+                label.deleteLater()
+        self.populate_board()
+        # self.chess_board.show()
         
 
 if __name__ == '__main__':
