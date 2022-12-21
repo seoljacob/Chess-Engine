@@ -41,7 +41,7 @@ class ChessGUI(QMainWindow):
             for j in range(8):
                 piece = self.chess_board.grid[i][j]
                 if piece:
-                    label = ChessPieceLabel()
+                    label = ChessPieceLabel(self.chess_board)
                     label.setPixmap(piece.get_pixmap())
                     label.setScaledContents(True)
                     label.setFixedSize(100, 100)
@@ -49,15 +49,8 @@ class ChessGUI(QMainWindow):
                     label.mouse_release.connect(self.move_piece) # connect mouse release to event handler
                     self.grid_layout.addWidget(label, i, j)
 
-    def move_piece(self, ex, ey, label):
+    def move_piece(self, sx, sy, ex, ey):
         # Update the internal chess board to match GUI
-        grid_size = 100
-        
-        sx = int(label.sx / grid_size)
-        sy = int(label.sy / grid_size)
-        ex = int(ex / grid_size)
-        ey = int(ey / grid_size)
-
         piece = self.chess_board.get_piece((sy, sx))
         self.chess_board.set_piece((ey, ex), piece) # check if dest is occupied, if not, place piece
         if not self.chess_board.is_same_tile((sy, sx), (ey, ex)):

@@ -43,7 +43,7 @@ class Board:
         if from_pos == to_pos:
             return True
 
-    def is_tile_occupied(self, to_pos):
+    def is_occupied(self, to_pos):
         if self.grid[to_pos[0]][to_pos[1]]:
             return True
         return False
@@ -52,7 +52,7 @@ class Board:
         return self.grid[from_pos[0]][from_pos[1]]
 
     def set_piece(self, to_pos, piece):
-        if not self.is_tile_occupied(to_pos):
+        if not self.is_occupied(to_pos):
             self.grid[to_pos[0]][to_pos[1]] = piece
         else:
             self.grid[to_pos[0]][to_pos[1]] = None
