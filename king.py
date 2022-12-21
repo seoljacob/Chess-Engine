@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPixmap
 class King(Piece):
     def __init__(self, color):
         super().__init__(color)
+        self.desc = f'{self.color} king'
 
     def can_move(self):
         pass

@@ -6,6 +6,7 @@ from PyQt5.QtGui import QPixmap
 class Knight(Piece):
     def __init__(self, color):
         super().__init__(color)
+        self.desc = f'{self.color} knight'
 
     def get_pixmap(self):
         if not self:

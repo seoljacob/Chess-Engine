@@ -5,8 +5,6 @@ from board import Board
 from custom_label import ChessPieceLabel
 
 class ChessGUI(QMainWindow):
-    _sx, _sy = None, None
-
     def __init__(self, chess_board):
         super().__init__()
         self.chess_board = chess_board # internal chess board
@@ -48,20 +46,23 @@ class ChessGUI(QMainWindow):
                     label.setScaledContents(True)
                     label.setFixedSize(100, 100)
                     label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-                    label.mouse_press.connect(ChessGUI.set_start_pos)
-                    label.mouse_release.connect(ChessGUI.update_board) # connect mouse release to event handler
+                    label.mouse_release.connect(self.move_piece) # connect mouse release to event handler
                     self.grid_layout.addWidget(label, i, j)
 
-    @staticmethod
-    def set_start_pos(x, y):
-        ChessGUI._sx = x
-        ChessGUI._sy = y
-
-    @staticmethod
-    def update_board(ex, ey):
+    def move_piece(self, ex, ey, label):
         # Update the internal chess board to match GUI
-        print(f"Start pos: ({ChessGUI._sx}, {ChessGUI._sy})")
-        print(f"End pos: ({ex}, {ey})")
+        grid_size = 100
+        
+        sx = int(label.sx / grid_size)
+        sy = int(label.sy / grid_size)
+        ex = int(ex / grid_size)
+        ey = int(ey / grid_size)
+
+        piece = self.chess_board.get_piece((sy, sx))
+        self.chess_board.set_piece((ey, ex), piece)
+        self.chess_board.clean_up((sy, sx))
+
+        self.chess_board.show_internal_board()
         
 
 if __name__ == '__main__':

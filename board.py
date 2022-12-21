@@ -12,32 +12,47 @@ class Board:
 
     def populate_board(self):
         # Place the white pieces on the board
-        self.grid[0][0] = Knight('white')  # White knight
-        self.grid[0][1] = Bishop('white')  # White bishop
-        self.grid[0][2] = Rook('white')  # White rook
-        self.grid[0][3] = Queen('white')  # White queen
-        self.grid[0][4] = King('white')  # White king
-        self.grid[0][5] = Bishop('white')  # White bishop
-        self.grid[0][6] = Knight('white')  # White knight
-        self.grid[0][7] = Rook('white')  # White rook
+        self.grid[0][0] = Rook('black')  # black knight
+        self.grid[0][1] = Knight('black')  # black bishop
+        self.grid[0][2] = Bishop('black') # black rook
+        self.grid[0][3] = Queen('black')  # black queen
+        self.grid[0][4] = King('black')  # black king
+        self.grid[0][5] = Bishop('black')  # black bishop
+        self.grid[0][6] = Knight('black')  # black knight
+        self.grid[0][7] = Rook('black')  # black rook
         for i in range(8):
-            self.grid[1][i] = Pawn('White')  # White pawns
+            self.grid[1][i] = Pawn('black')  # black pawns
 
         # Place the black pieces on the board
-        self.grid[7][0] = Knight('black')  # Black knight
-        self.grid[7][1] = Bishop('black')  # Black bishop
-        self.grid[7][2] = Rook('black')  # Black rook
-        self.grid[7][3] = Queen('black')  # Black queen
-        self.grid[7][4] = King('black')  # Black king
-        self.grid[7][5] = Bishop('black')  # Black bishop
-        self.grid[7][6] = Knight('black')  # Black knight
-        self.grid[7][7] = Rook('black')  # Black rook
+        self.grid[7][0] = Rook('white')  # white knight
+        self.grid[7][1] = Knight('white')  # white bishop
+        self.grid[7][2] = Bishop('white')  # white rook
+        self.grid[7][3] = Queen('white')  # white queen
+        self.grid[7][4] = King('white')  # white king
+        self.grid[7][5] = Bishop('white')  # white bishop
+        self.grid[7][6] = Knight('white')  # white knight
+        self.grid[7][7] = Rook('white')  # white rook
         for i in range(8):
-            self.grid[6][i] = Pawn('black')  # Black pawns
+            self.grid[6][i] = Pawn('white')  # white pawns
+    
+    def show_internal_board(self):
+        for row in self.grid:
+            print(row)
 
-    def move_piece(self, from_pos, to_pos):
-        # Move a chess piece from one position to another
-        pass
+    def is_tile_occupied(self, to_pos):
+        if self.grid[to_pos[0]][to_pos[1]]:
+            return True
+        return False
+
+    def get_piece(self, from_pos):
+        return self.grid[from_pos[0]][from_pos[1]]
+
+    def set_piece(self, to_pos, piece):
+        if not self.is_tile_occupied(to_pos):
+            self.grid[to_pos[0]][to_pos[1]] = piece
+
+    def clean_up(self, from_pos):
+        self.grid[from_pos[0]][from_pos[1]] = None
 
     def in_check(self):
         # Check if the current player is in check
