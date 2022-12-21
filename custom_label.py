@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSignal
 
 """
 370 rounds to 400
@@ -16,31 +16,32 @@ def round_to_100(number):
     return rounded_number
 
 class ChessPieceLabel(QLabel):
+    mouse_press = pyqtSignal(int, int)
+    mouse_release = pyqtSignal(int, int) # set up event listener for mouse release event
+
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setMouseTracking(True)  # Enable mouse tracking for the label
-        self.dragging = False  # Flag to track whether the label is being dragged
+        self.setMouseTracking(True)
+        self.dragging = False
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.setCursor(Qt.ClosedHandCursor)
-            self.dragging = True  # Set the dragging flag to True
-            self.drag_start_pos = event.pos()  # Record the start position of the drag
+            self.dragging = True
+            self.drag_start_pos = event.pos()
+            self.mouse_press.emit(self.x(), self.y())
 
     def mouseMoveEvent(self, event):
         if self.dragging:
-            # Calculate the distance moved from the start position
             delta = event.pos() - self.drag_start_pos
-            # Update the position of the label by the distance moved
             self.move(self.x() + delta.x(), self.y() + delta.y())
 
     def mouseReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.dragging = False  # Set the dragging flag to False
-
+            self.dragging = False
             x = round_to_100(self.x())
             y = round_to_100(self.y())
-            print(x, y)
             self.move(x, y)
-            
+            self.mouse_release.emit(x, y) # send x, y on mouse release
+           
         
