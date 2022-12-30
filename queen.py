@@ -2,11 +2,11 @@ from piece import Piece
 from PyQt5.QtGui import QPixmap
 
 class Queen(Piece):
-    def __init__(self, color):
-        super().__init__(color)
+    def __init__(self, color, position):
+        super().__init__(color, position)
         self.desc = f'{self.color} queen'
 
-    def can_move(self):
+    def get_moves(self):
         pass
 
     def get_pixmap(self):

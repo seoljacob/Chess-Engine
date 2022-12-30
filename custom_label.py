@@ -18,12 +18,15 @@ def round_to_100(number):
 class ChessPieceLabel(QLabel):
     mouse_release = pyqtSignal(int, int, int, int) # set up event listener for mouse release event
 
-    def __init__(self, *args, parent = None):
-        super().__init__(parent)
-        self.chess_board = args[0]
+    def __init__(self, chess_board, grid_layout):
+        super().__init__(None)
+        self.chess_board = chess_board
+        self.grid_layout = grid_layout
+
         self.setMouseTracking(True)
         self.dragging = False
         self.sx, self.sy = None, None
+        self.moves = []
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -31,6 +34,9 @@ class ChessPieceLabel(QLabel):
             self.dragging = True
             self.drag_start_pos = event.pos()
             self.sx, self.sy = self.x(), self.y()
+            piece = self.chess_board.grid[int(self.sy / 100)][int(self.sx / 100)]
+            print(piece.get_moves(self.chess_board))
+
 
     def mouseMoveEvent(self, event):
         if self.dragging:
@@ -51,6 +57,7 @@ class ChessPieceLabel(QLabel):
             ex = int(x / grid_size)
             ey = int(y / grid_size)
 
+            # y comes before x because matrices in Python are read [rows] then [cols]
             if self.chess_board.is_occupied((ey, ex)) and self.chess_board.grid[ey][ex].color == self.chess_board.grid[sy][sx].color:
                 self.move(sx * grid_size, sy * grid_size)
                 return

@@ -1,8 +1,15 @@
 class Piece:
-    def __init__(self, color):
+    def __init__(self, color, position):
         self.color = color
-    
-    def can_move(self):
+        self.position = position
+
+    def get_position(self):
+        return self.position
+
+    def set_position(self, value):
+        self.position = value
+
+    def get_moves(self):
         pass
 
     def get_pixmap(self):
