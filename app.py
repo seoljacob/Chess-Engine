@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFrame, QGridLayout, QStackedLayout
 from PyQt5.QtCore import Qt
 from board import Board
-from custom_label import ChessPieceLabel
+from chess_piece_label import ChessPieceLabel
 
 class ChessGUI(QMainWindow):
     def __init__(self, chess_board):
@@ -41,7 +41,7 @@ class ChessGUI(QMainWindow):
             for j in range(8):
                 piece = self.chess_board.grid[i][j]
                 if piece:
-                    label = ChessPieceLabel(self.chess_board, self.grid_layout)
+                    label = ChessPieceLabel(self.board, self.chess_board, self.grid_layout)
                     label.setPixmap(piece.get_pixmap())
                     label.setScaledContents(True)
                     label.setFixedSize(100, 100)
@@ -49,12 +49,12 @@ class ChessGUI(QMainWindow):
                     label.mouse_release.connect(self.move_piece) # connect mouse release to event handler
                     self.grid_layout.addWidget(label, i, j)
 
-    def move_piece(self, sx, sy, ex, ey):
+    def move_piece(self, s_col, s_row, e_col, e_row):
         # Update the internal chess board to match GUI
-        piece = self.chess_board.get_piece((sy, sx))
-        self.chess_board.set_piece((ey, ex), piece)
-        if not self.chess_board.is_same_tile((sy, sx), (ey, ex)):
-            self.chess_board.clean_up((sy, sx))
+        piece = self.chess_board.get_piece((s_row, s_col))
+        self.chess_board.set_piece((e_row, e_col), piece)
+        if not self.chess_board.is_same_tile((s_row, s_col), (e_row, e_col)):
+            self.chess_board.clean_up((s_row, s_col))
 
         self.update_GUI()
 

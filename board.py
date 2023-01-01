@@ -36,6 +36,8 @@ class Board:
             self.grid[6][i] = Pawn('white', (6, i))  # white pawns
     
     def show(self):
+        """Displays all rows of the chess board.
+        """
         for row in self.grid:
             print(row)
 
@@ -67,6 +69,14 @@ class Board:
         return False
 
     def get_piece(self, from_pos):
+        """Returns the piece that belongs to the tile (from_pos[0], from_pos[1])
+
+        Args:
+            from_pos (tuple): (source x, source y)
+
+        Returns:
+            _type_: Piece
+        """
         return self.grid[from_pos[0]][from_pos[1]]
 
     def set_piece(self, to_pos, piece):

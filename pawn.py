@@ -28,7 +28,6 @@ class Pawn(Piece):
             # Case: first move --> move forward by 2
             if Pawn.is_inbound(cur_row + 2) and not self.has_moved and not chess_board.is_occupied((cur_row + 2, cur_col)):
                 moves.append((cur_row + 2, cur_col))
-                self.has_moved = True
 
             # Case: take opponent piece --> move diagonally to the left by 1
             if ((Pawn.is_inbound(cur_row + 1) and Pawn.is_inbound(cur_col - 1))
@@ -50,7 +49,6 @@ class Pawn(Piece):
             # Case: first move --> move forward by 2
             if Pawn.is_inbound(cur_row - 2) and not self.has_moved and not chess_board.is_occupied((cur_row - 2, cur_col)):
                 moves.append((cur_row - 2, cur_col))
-                self.has_moved = True
 
             # Case: take opponent piece --> move diagonally to the left by 1
             if ((Pawn.is_inbound(cur_row - 1) and Pawn.is_inbound(cur_col - 1))
