@@ -41,6 +41,11 @@ class Board:
         for row in self.grid:
             print(row)
 
+    def is_same_color(self, piece1, piece2):
+        if piece1 and piece2 and piece1.color == piece2.color:
+            return True
+        return False
+
         
     def is_same_tile(self, from_pos, to_pos):
         """Checks whether the source tile and the destination tile are the same. 
