@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QFrame, QGridLayout, QStackedLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSplitter, QWidget, QFrame, QGridLayout
 from PyQt5.QtCore import Qt
 from board import Board
 from chess_piece_label import ChessPieceLabel
@@ -13,7 +13,7 @@ class ChessGUI(QMainWindow):
         self.setWindowTitle("Chess Engine")
         self.setGeometry(0, 0, 800, 800) # (x, y, width, height)
         self.setFixedSize(800, 800)
-
+    
         # where the main content goes
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)

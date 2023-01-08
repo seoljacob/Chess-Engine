@@ -7,6 +7,7 @@ class ChessPieceLabel(QLabel):
     mouse_release = pyqtSignal(int, int, int, int)
 
     grid_size = 100
+    is_white_turn = True
 
     def __init__(self, board, chess_board, grid_layout):
         super().__init__(None)
@@ -40,6 +41,15 @@ class ChessPieceLabel(QLabel):
                 self.x() / ChessPieceLabel.grid_size), int(self.y() / ChessPieceLabel.grid_size)
 
             piece = self.chess_board.grid[self.s_row][self.s_col]
+
+            # Allow mouse press if its white's turn
+            if ChessPieceLabel.is_white_turn and not piece.color == 'white':
+                return
+
+            # Allow mouse press if it's black's turn
+            if not ChessPieceLabel.is_white_turn and not piece.color == 'black':
+                return
+
             self.moves = piece.get_moves(self.chess_board)
             print(self.moves)
             for move in self.moves:
@@ -89,6 +99,8 @@ class ChessPieceLabel(QLabel):
 
             # Case valid movement -> the tile is a valid tile that the piece can get to
             self.move(x, y)
+
+            ChessPieceLabel.is_white_turn = not ChessPieceLabel.is_white_turn
 
             # Set Pawn's has_moved to True
             piece = self.chess_board.grid[self.s_row][self.s_col]

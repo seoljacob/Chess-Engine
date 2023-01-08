@@ -6,12 +6,6 @@ class Rook(Piece):
         super().__init__(color, position)
         self.desc = f'{self.color} rook'
 
-    @staticmethod
-    def is_inbound(val):
-        if val < 0 or val > 7:
-            return False
-        return True
-
     def get_moves(self, chess_board):
         moves = []
 

@@ -9,6 +9,12 @@ class Piece:
     def set_position(self, value):
         self.position = value
 
+    @staticmethod
+    def is_inbound(val):
+        if val < 0 or val > 7:
+            return False
+        return True
+
     def get_moves(self):
         pass
 

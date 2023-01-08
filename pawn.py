@@ -8,12 +8,6 @@ class Pawn(Piece):
         self.has_moved = False
         self.desc = f'{self.color} pawn'
 
-    @staticmethod
-    def is_inbound(val):
-        if val < 0 or val > 7:
-            return False
-        return True
-
     def get_moves(self, chess_board):
         moves = []
         cur_row = self.position[0]
