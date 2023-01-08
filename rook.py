@@ -65,7 +65,7 @@ class Rook(Piece):
 
         first_collision = False
 
-        # Case 3 -> move right
+        # Case 4 -> move right
         while Rook.is_inbound(right):
             if not chess_board.is_occupied((cur_row, right)):
                 moves.append((cur_row, right))
